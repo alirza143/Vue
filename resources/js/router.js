@@ -1,3 +1,4 @@
+// this file handle all vue routets. routes that view use to navigate between pages.
 import Vue from "vue";
 import Router from 'vue-router';
 import Welcome from './views/Welcome.vue';
@@ -12,7 +13,6 @@ Vue.use(Router);
 
 const routes = [{
         path: '/home',
-        name: 'home',
         component: Home,
         children: [{
                 path: '',
@@ -21,37 +21,48 @@ const routes = [{
             },
             {
                 path: 'categories',
-                name: 'catagories',
+                name: 'catagoriesView',
                 component: Categories
             },
         ],
         beforeEnter(to, from, next) {
-            if (!auth.isLoggedIn()) {
-                next("/login");
+            if (auth.isLoggedIn()) {
+                console.log("if hoe");
+                next();
             } else {
-                next()
+                console.log("else ho");
+                next('login');
             }
         }
     },
 
     {
         path: '/login',
-        name: 'login',
-        component: Login
+        name: 'loginView',
+        component: Login,
+        beforeEnter(to, from, next) {
+            console.log(to);
+            if (!auth.isLoggedIn()) {
+                next()
+            } else {
+                next('/login');
+            }
+        }
     },
     {
         path: '/register',
-        name: 'register',
+        name: 'registerView',
         component: Register
     },
     {
         path: '/forgetpassword',
-        name: 'forgetPassword',
+        name: 'forgetPasswordView',
         component: ForgetPassword
     }
 ];
 
 const router = new Router({
+    mode: 'history',
     routes: routes
 });
 

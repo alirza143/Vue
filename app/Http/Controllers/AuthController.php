@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
@@ -9,6 +10,10 @@ use Carbon\Carbon;
 
 class AuthController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function register(Request $request){
         $request->validate([
             'name'=>'required|string|max:255',
@@ -28,6 +33,10 @@ class AuthController extends Controller
         return response()->json($user, $status);
     }
 
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -41,7 +50,7 @@ class AuthController extends Controller
                 'message'=>'Unauthorized',
                 'status_code'=>401
             ]);
-        } 
+        }
 
         $user=$request->user();
 
@@ -54,7 +63,7 @@ class AuthController extends Controller
         $token = $tokenData->accessToken;
 
         if($request->remember_me){
-            
+
             $tokenData->expires_at = Carbon::now()->addWeeks(1);
         }
         // return response()->json(['tokenData'=> $tokenData,'token' => $token],200);

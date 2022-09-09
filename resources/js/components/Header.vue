@@ -12,9 +12,10 @@
                 </div>
             </form>
             <!-- Navbar-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" href="#!" @click="logout()">Logout</button>
             <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
@@ -25,3 +26,19 @@
             </ul>
         </nav>
 </template>
+
+<script>
+import * as auth from '../services/auth_service';
+export default {
+    methods:{
+        logout: async function(){
+            auth.logout();
+            this.$router.push('/login');
+        }
+    }
+}
+</script>
+
+<style>
+
+</style>
